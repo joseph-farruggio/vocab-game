@@ -159,6 +159,9 @@
 							"solved": false
 						}
 					],
+					unSolvedWords() {
+						return this.words.filter(word => !word.solved)
+					},
 					activeWord: null,
 					mode: 'spanish',
 					question() { return this.mode == 'spanish' ? 'Palabra de buscar' : 'Word to guess'},
@@ -166,17 +169,17 @@
 						// If in spansih mode, check if the english word is correct
 						if (this.mode == 'spanish' && word.english == this.activeWord.english) {
 							word.solved = true
-							
+							this.activeWord = this.unSolvedWords[Math.floor(Math.random() * this.unSolvedWords.length)]
 						}
 
 						if (this.mode == 'english' && word.spanish == this.activeWord.spanish) {
 							word.solved = true
-							
+							this.activeWord = this.unSolvedWords[Math.floor(Math.random() * this.unSolvedWords.length)]
 						}
 					},
 
 					init() {
-						this.activeWord = this.words[Math.floor(Math.random() * this.words.length)]
+						this.activeWord = this.unSolvedWords[Math.floor(Math.random() * this.unSolvedWords.length)]
 					},
 				}))
 			})
