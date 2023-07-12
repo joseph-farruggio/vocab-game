@@ -1,0 +1,185 @@
+---
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body class="bg-slate-100">
+		<div x-data="vocab" class="max-w-screen-lg mx-auto mt-32">
+			<h2 x-text="question" class="text-xl font-medium text-slate-400 text-center"></h2>
+			<p class="text-center mt-4 text-6xl" x-text="activeWord.spanish"></p>
+			<div class="grid grid-cols-6 gap-4 mt-12">
+				<template x-for="(word, index) in words">
+					<button 
+						@click="guess(word)"
+						class="bg-white p-4 rounded-lg shadow-lg text-center transform transition-transform hover:scale-110">
+						<template x-if="mode == 'spanish' && !word.solved">
+							<span x-text="word.english"></span>
+						</template>
+						
+						<template x-if="mode == 'english' && !word.solved">
+							<span x-text="word.spanish"></span>
+						</template>
+
+						<template x-if="word.solved">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" /></svg>
+						</template>
+					</button>
+				</template>
+			</div>
+		</div>
+
+		<script>
+			document.addEventListener('alpine:init', () => {
+				Alpine.data('vocab', () => ({
+					words: [
+						{
+							"spanish": "ser",
+							"english": "to be",
+							"solved": false
+						},
+						{
+							"spanish": "haber",
+							"english": "to have",
+							"solved": false
+						},
+						{
+							"spanish": "estar",
+							"english": "to be",
+							"solved": false
+						},
+						{
+							"spanish": "tener",
+							"english": "to have",
+							"solved": false
+						},
+						{
+							"spanish": "hacer",
+							"english": "to do",
+							"solved": false
+						},
+						{
+							"spanish": "poder",
+							"english": "to be able",
+							"solved": false
+						},
+						{
+							"spanish": "decir",
+							"english": "to say",
+							"solved": false
+						},
+						{
+							"spanish": "ir",
+							"english": "to go",
+							"solved": false
+						},
+						{
+							"spanish": "ver",
+							"english": "to see",
+							"solved": false
+						},
+						{
+							"spanish": "dar",
+							"english": "to give",
+							"solved": false
+						},
+						{
+							"spanish": "saber",
+							"english": "to know",
+							"solved": false
+						},
+						{
+							"spanish": "querer",
+							"english": "to want",
+							"solved": false
+						},
+						{
+							"spanish": "llegar",
+							"english": "to arrive",
+							"solved": false
+						},
+						{
+							"spanish": "pasar",
+							"english": "to pass",
+							"solved": false
+						},
+						{
+							"spanish": "deber",
+							"english": "to owe",
+							"solved": false
+						},
+						{
+							"spanish": "poner",
+							"english": "to put",
+							"solved": false
+						},
+						{
+							"spanish": "parecer",
+							"english": "to seem",
+							"solved": false
+						},
+						{
+							"spanish": "quedar",
+							"english": "to stay",
+							"solved": false
+						},
+						{
+							"spanish": "creer",
+							"english": "to believe",
+							"solved": false
+						},
+						{
+							"spanish": "hablar",
+							"english": "to speak",
+							"solved": false
+						},
+						{
+							"spanish": "llevar",
+							"english": "to carry",
+							"solved": false
+						},
+						{
+							"spanish": "dejar",
+							"english": "to leave",
+							"solved": false
+						},
+						{
+							"spanish": "seguir",
+							"english": "to follow",
+							"solved": false
+						},
+						{
+							"spanish": "encontrar",
+							"english": "to find",
+							"solved": false
+						}
+					],
+					activeWord: null,
+					mode: 'spanish',
+					question() { return this.mode == 'spanish' ? 'Palabra de buscar' : 'Word to guess'},
+					guess(word) {
+						// If in spansih mode, check if the english word is correct
+						if (this.mode == 'spanish' && word.english == this.activeWord.english) {
+							word.solved = true
+							
+						}
+
+						if (this.mode == 'english' && word.spanish == this.activeWord.spanish) {
+							word.solved = true
+							
+						}
+					},
+
+					init() {
+						this.activeWord = this.words[Math.floor(Math.random() * this.words.length)]
+					},
+				}))
+			})
+		</script>
+	</body>
+</html>
